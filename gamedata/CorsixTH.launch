@@ -1,0 +1,27 @@
+#!/bin/bash
+pwd=`dirname $(readlink -f "$0")`
+
+cd "$pwd"
+
+echo "--------------------------------------------------------------"
+echo "Setting PATH to $pwd:$PATH"
+export PATH=$pwd:$PATH
+
+echo "--------------------------------------------------------------"
+echo "Setting HOME to $pwd"
+export HOME=$pwd
+export XDG_HOME_DIRS=$pwd
+export XDG_CONFIG_HOME=$pwd
+
+if [ ! -d "CorsixTH" ]; then
+  mkdir -p /dragonbox/appdata/CorsixTH/CorsixTH/{Campaigns,Levels,Logs,Saves,Screenshots}
+  cp defaults/hotkeys.txt /dragonbox/appdata/CorsixTH/CorsixTH/hotkeys.txt
+  cp defaults/config.txt /dragonbox/appdata/CorsixTH/CorsixTH/config.txt
+fi
+
+if [ ! -f "HOSPITAL.EXE" ];then
+   zenity --error --width=400 --height=200 --text="Theme Hospital files not found, please copy into /dragonbox/appdata/CorsixTH/ directory" --timeout=10
+   exit 1
+fi
+
+gl4es ./corsix-th "$@"

@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=0.68
+Type=Application
+Categories=Game;Simulation;
+Name=CorsixTH
+Exec=CorsixTH.launch
+Icon=icon.png
+X-DBP-Screenshot=preview1.png
+
+[Package Entry]
+Id=CorsixTH_maquis196
+Name=CorsixTH
+Arch=armhf
+Exec=CorsixTH.launch
+Version=0.68
+Appdata=CorsixTH
+Icon=icon.png
+Dependency[deb]=liblua5.3-0;fluid-soundfont-gm;lua-filesystem;lua-lpeg;libavformat58;libavresample4;libavdevice58;libavutil56;libavfilter7;libswscale5;libpostproc55;libswresample3;libavcodec58;ffmpeg;timidity;
