@@ -16,12 +16,9 @@ git clone https://github.com/CorsixTH/CorsixTH.git
 cd CorsixTH
 git checkout v${UPSTREAM_VERSION}
 
-# build corsixth
-mkdir build && cd $_
-
 ## TODO - buster warning - needs newer cmake than on system - install from source; change command to /usr/local/bin/cmake
 
-cmake -DUSE_SOURCE_DATADIRS=ON -DCMAKE_BUILD_TYPE=Release ..
+cmake -B build -DUSE_SOURCE_DATADIRS=ON -DCMAKE_BUILD_TYPE=Release ..
 make -j2
 
 # Copy new binary to gamedata
