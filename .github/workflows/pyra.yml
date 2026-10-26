@@ -21,18 +21,18 @@ jobs:
           docker build \
             --platform linux/arm/v7 \
             -f Dockerfile.pyra \
-            -t ja2-pyra-builder .
+            -t corsixth-pyra-builder .
 
       - name: Build DBP
         run: |
           docker run --rm \
             --platform linux/arm/v7 \
             -v "$PWD:/src" \
-            ja2-pyra-builder \
+            corsixth-pyra-builder \
             /bin/bash -c "/src/local_build_dbp.sh '$VERSION'"
 
       - name: Upload DBP
         uses: actions/upload-artifact@v4
         with:
-          name: ja2-pyra-${{ env.VERSION }}
+          name: corsixth-pyra-${{ env.VERSION }}
           path: '*.dbp'
