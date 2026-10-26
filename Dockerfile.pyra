@@ -5,27 +5,35 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
-        curl \
-        libsdl2-dev \
-	ca-certificates \
+        ca-certificates \
         cmake \
-        wget \
-	g++ \
-	fluid \ 
-        squashfs-tools \
-        zip \
-	pkg-config \
-	libssl-dev \
+        curl \
+        doxygen \
+        ffmpeg \
+        fluidsynth \
+        fluid \
+        git \
+        libavcodec-dev \
+        libavdevice-dev \
+        libavfilter-dev \
+        libavformat-dev \
+        libavutil-dev \
         libcurl4-nss-dev \
-	ffmpeg \
-	libavcodec-dev \
-	libavformat-dev \
-	libavdevice-dev \
-	libavutil-dev \
-	libavfilter-dev \
-	libswscale-dev \
-	libpostproc-dev \
-	libswresample-dev \
+        libfreetype6-dev \
+        liblua5.3-0 \
+        liblua5.3-0-dbg \
+        liblua5.3-dev \
+        libpostproc-dev \
+        libsdl2-dev \
+        libsdl2-mixer-dev \
+        libswresample-dev \
+        libswscale-dev \
+        lua-filesystem \
+        lua-lpeg \
+        pkg-config \
+        squashfs-tools \
+        wget \
+        zip \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
