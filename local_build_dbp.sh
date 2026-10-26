@@ -1,40 +1,58 @@
 #!/bin/bash
 
-UPSTREAM_VERSION="0.68.0"
+set -euo pipefail
 
-## Possibly combine - Works on buster & bookworm
-sudo apt-get install build-essential cmake git libsdl2-dev libsdl2-mixer-dev fluidsynth libfreetype6-dev lua-filesystem lua-lpeg doxygen liblua5.3-0 liblua5.3-0-dbg liblua5.3-dev squashfs-tools
+VERSION="${1:?Usage: $0 <version - example - 0.70.1>}"
+UPSTREAM_VERSION="${VERSION%-r*}"
 
-# Ensure build environment - buster
-sudo apt install git ffmpeg libavcodec-dev libavformat-dev libavresample-dev libavdevice-dev libavutil-dev libavfilter-dev libswscale-dev libpostproc-dev libswresample-dev libcurl4-openssl-dev libcurl4-gnutls-dev
+PACKAGE_NAME="corsixth"
+REVISION="${VERSION##*-r}"
+P="${PACKAGE_NAME}-${UPSTREAM_VERSION}"
 
-# Ensure build environment - bookworm
-sudo apt install git libcurl4-nss-dev  ffmpeg libavcodec-dev libavformat-dev libavdevice-dev libavutil-dev libavfilter-dev libswscale-dev libpostproc-dev libswresample-dev 
+# Fetch sources
+mkdir -p build
+cd build
+rm -f "v${UPSTREAM_VERSION}.tar.gz"
+wget https://github.com/CorsixTH/CorsixTH/archive/refs/tags/v${UPSTREAM_VERSION}.tar.gz
+tar zxpvf v${UPSTREAM_VERSION}.tar.gz
+cd CorsixTH-${UPSTREAM_VERSION}
 
-# Checkout upstream repo
-git clone https://github.com/CorsixTH/CorsixTH.git
-cd CorsixTH
-git checkout v${UPSTREAM_VERSION}
-
-# build corsixth
-mkdir build && cd $_
-
-## TODO - buster warning - needs newer cmake than on system - install from source; change command to /usr/local/bin/cmake
-
-cmake -DUSE_SOURCE_DATADIRS=ON -DCMAKE_BUILD_TYPE=Release ..
+# Build # Set options
+mkdir _bin
+cd _bin
+cmake DUSE_SOURCE_DATADIRS=ON -DCMAKE_BUILD_TYPE=Release ..
 make -j2
 
-# Copy new binary to gamedata
+## copy the needful to gamedata
 cp CorsixTH/corsix-th ../../gamedata
 cd ../../..
 
-# sed version upstream
+## Configure meta file
+cat > assets/meta/default.desktop <<EOF
+[Desktop Entry]
+Version=${UPSTREAM_VERSION}
+Type=Application
+Categories=Game;Simulation;
+Name=CorsixTH
+Exec=CorsixTH.launch
+Icon=icon.png
+X-DBP-Screenshot=preview1.png
 
-sed -i 's/Version=.*/Version=0\.68\.0/' assets/meta/default.desktop
+[Package Entry]
+Id=CorsixTH_maquis196
+Name=CorsixTH
+Arch=armhf
+Exec=CorsixTH.launch
+Version=${VERSION}
+Appdata=CorsixTH
+Icon=icon.png
+EOF
 
-# TODO - sed version repo with maybe r1 with counter? - manual
-
-rm data.zip gamedata.sqfs
+rm -f data.zip gamedata.sqfs
 mksquashfs gamedata gamedata.sqfs -comp xz
-cd assets; zip -r ../data.zip *; cd ..
-cat gamedata.sqfs data.zip > corsixth_0.68_maquis196.dbp
+
+cd assets
+zip -r ../data.zip *
+cd ..
+
+cat gamedata.sqfs data.zip > "${P}_maquis196.dbp"
