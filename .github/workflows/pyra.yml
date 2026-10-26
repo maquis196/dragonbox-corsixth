@@ -35,4 +35,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: corsixth-pyra-${{ env.VERSION }}
-          path: '*.dbp'
+          path: '**/*.dbp'
