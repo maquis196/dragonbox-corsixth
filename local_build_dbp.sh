@@ -27,8 +27,8 @@ cmake -S . -B _bin/build \
 cmake --build _bin/build --parallel 2
 
 ## copy the needful to gamedata
-cp CorsixTH/corsix-th ../../gamedata
-cd ../../..
+cp _bin/build/CorsixTH/corsix-th ../gamedata
+cd ..
 
 ## Configure meta file
 cat > assets/meta/default.desktop <<EOF
