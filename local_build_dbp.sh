@@ -19,9 +19,12 @@ cd CorsixTH-${UPSTREAM_VERSION}
 
 # Build # Set options
 mkdir _bin
-cd _bin
-cmake DUSE_SOURCE_DATADIRS=ON -DCMAKE_BUILD_TYPE=Release ..
-make -j2
+cmake -S . -B _bin/build \
+    -G "Unix Makefiles" \
+    -DUSE_SOURCE_DATADIRS=ON \
+    -DCMAKE_BUILD_TYPE=Release
+
+cmake --build _bin/build --parallel 2
 
 ## copy the needful to gamedata
 cp CorsixTH/corsix-th ../../gamedata
