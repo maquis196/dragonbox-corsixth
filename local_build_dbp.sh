@@ -59,4 +59,4 @@ cd assets
 zip -r ../data.zip *
 cd ..
 
-cat gamedata.sqfs data.zip > "$GITHUB_WORKSPACE/${P}_maquis196.dbp"
+cat gamedata.sqfs data.zip > "${P}_maquis196.dbp"
