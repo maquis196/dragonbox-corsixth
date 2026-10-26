@@ -31,6 +31,7 @@ cp _bin/build/CorsixTH/corsix-th ../gamedata
 cd ..
 
 ## Configure meta file
+mkdir -p assets/meta
 cat > assets/meta/default.desktop <<EOF
 [Desktop Entry]
 Version=${UPSTREAM_VERSION}
